@@ -1,0 +1,22 @@
+{
+  "name": "zonia-frontend",
+  "version": "0.0.1",
+  "description": "ZONIA Frontend",
+  "private": true,
+  "repository": "https://github.com/mzonski/frontend.git",
+  "author": "Maciej Zonski <me@zonni.pl>",
+  "license": "MIT",
+  "workspaces": [
+    "configs/*",
+    "packages/*",
+    "apps/*"
+  ],
+  "devDependencies": {
+    "typescript": "^5.1.6"
+  },
+  "engines": {
+    "npm": "please-use-yarn",
+    "yarn": ">= 1.22.19",
+    "node": ">= v16.20.1"
+  }
+}

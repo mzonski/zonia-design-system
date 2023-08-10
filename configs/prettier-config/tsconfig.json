@@ -1,0 +1,8 @@
+{
+  "references": [
+    { "path": "../ts-config/tsconfig.base.json"}
+  ],
+  "include": [
+    "index.cjs"
+  ],
+}
