@@ -1,0 +1,23 @@
+@use 'sass:map';
+@use "converters" as convert;
+@use "color" as color;
+@use '../namespace' as ns;
+
+$default-border-size: convert.value-to-rem(1px);
+$border-types: [solid, dashed];
+
+@mixin add-border($color: primary, $type: solid) {
+  border: $default-border-size color.get-color($color, default) $type;
+}
+
+@mixin generate-border-styles() {
+  @each $border-type in $border-types {
+    @each $color-type, $_unused in color.$color-data {
+      .#{ns.$prefix}-border-#{$border-type}-#{$color-type + ""} {
+        @include add-border($color-type, $border-type);
+      }
+
+      // TODO: Iterate over deeper colors
+    }
+  }
+}

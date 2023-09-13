@@ -1,0 +1,11 @@
+@charset "UTF-8";
+@use 'namespace' as ns;
+@use './abstracts/border' as border;
+@use './abstracts/color' as color;
+@use './abstracts/elevation' as elevation;
+
+.#{ns.$prefix} {
+  @include border.generate-border-styles;
+  @include color.generate-color-styles;
+  @include elevation.generate-elevation-styles;
+}

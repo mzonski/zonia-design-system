@@ -1,0 +1,51 @@
+@use 'sass:map';
+@use 'color' as color;
+@use 'converters' as convert;
+@use '../namespace' as ns;
+
+$elevation-default-color: color.get-color(black);
+$elevation-offset-1: convert.value-to-rem(4px);
+$elevation-offset-2: convert.value-to-rem(6px);
+$elevation-offset-3: convert.value-to-rem(8px);
+
+// Shadows data
+$elevation-data: (
+  primary: (
+    default: drop-shadow($elevation-offset-1 $elevation-offset-1 0 $elevation-default-color),
+    far: drop-shadow($elevation-offset-2 $elevation-offset-2 0 $elevation-default-color),
+    farther: drop-shadow($elevation-offset-3 $elevation-offset-3 0 $elevation-default-color),
+  ),
+  secondary: (
+    default: drop-shadow($elevation-offset-1 convert.negate-value($elevation-offset-1) 0 $elevation-default-color),
+    far: drop-shadow($elevation-offset-2 convert.negate-value($elevation-offset-2) 0 $elevation-default-color),
+    farther: drop-shadow($elevation-offset-3 convert.negate-value($elevation-offset-3) 0 $elevation-default-color),
+  ),
+) !default;
+
+@function get-elevation($type: primary, $level: 1) {
+  $elevation-data-object: map.get(map.get($elevation-data, $type), $level);
+
+  @if map-has-key($elevation-data, $elevation-data-object) {
+    $elevation-data-object: map.get(map.get($elevation-data, $elevation-data-object), $level);
+  }
+
+  @if $elevation-data-object {
+    @return $elevation-data-object;
+  } @else {
+    @error 'Elevation `#{$level} - #{$type}` not found. Available elevations: #{$elevation-data}';
+  }
+}
+
+@mixin add-elevation($type: primary, $level: default) {
+  filter: get-elevation(primary, $level);
+}
+
+@mixin generate-elevation-styles() {
+  @each $elevation-type, $elevation-data-object in $elevation-data {
+    @each $elevation-level, $elevation-filter in $elevation-data-object {
+      .#{ns.$prefix}-elevation-#{$elevation-type}-#{$elevation-level} {
+        @include add-elevation($elevation-type, $elevation-level);
+      }
+    }
+  }
+}

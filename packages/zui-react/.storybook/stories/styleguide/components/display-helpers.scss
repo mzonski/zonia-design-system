@@ -1,0 +1,38 @@
+.default-canvas {
+  display: flex;
+  flex-direction: row;
+}
+
+.panel {
+  flex-basis: 50%;
+}
+
+.color-category {
+  display: flex;
+  margin: 4px;
+}
+
+.flex-break {
+  height: 0;
+}
+
+.color-display {
+  display: flex;
+  flex-direction: column;
+  margin: 4px;
+
+  .color-box {
+    width: 64px;
+    height: 64px;
+  }
+
+  .border-box {
+    width: 64px;
+    height: 64px;
+    border: 1px solid;
+  }
+
+  .color-label {
+    margin-top: 2px;
+  }
+}

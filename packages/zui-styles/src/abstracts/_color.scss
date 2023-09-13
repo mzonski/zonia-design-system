@@ -1,0 +1,130 @@
+@use "../themes/dir" as theme;
+@use "../namespace" as ns;
+@use 'sass:map';
+@use 'sass:color';
+
+$color-data: (
+  primary: (
+    default: theme.$theme-color-primary,
+    background: theme.$theme-color-primary-lighter-80,
+    hover: theme.$theme-color-primary-darker-20,
+    focused: theme.$theme-color-primary-darker-30,
+  ),
+  secondary: (
+    default: theme.$theme-color-secondary,
+    background: theme.$theme-color-secondary-lighter-80,
+    hover: theme.$theme-color-secondary-darker-20,
+    focused: theme.$theme-color-secondary-darker-30,
+  ),
+  accent: (
+    default: theme.$theme-color-accent,
+    background: theme.$theme-color-accent-lighter-80,
+    hover: theme.$theme-color-accent-darker-20,
+    focused: theme.$theme-color-accent-darker-30,
+  ),
+  error: (
+    default: theme.$theme-color-error,
+    background: theme.$theme-color-error-lighter-80,
+    hover: theme.$theme-color-error-darker-20,
+    focused: theme.$theme-color-error-darker-30,
+  ),
+  info: (
+    default: theme.$theme-color-info,
+    background: theme.$theme-color-info-lighter-80,
+    hover: theme.$theme-color-info-darker-20,
+    focused: theme.$theme-color-info-darker-30,
+  ),
+  success: (
+    default: theme.$theme-color-success,
+    background: theme.$theme-color-success-lighter-80,
+    hover: theme.$theme-color-success-darker-20,
+    focused: theme.$theme-color-success-darker-30,
+  ),
+  warning: (
+    default: theme.$theme-color-warning,
+    background: theme.$theme-color-warning-lighter-80,
+    hover: theme.$theme-color-warning-darker-20,
+    focused: theme.$theme-color-warning-darker-30,
+  ),
+  neutral: (
+    default: theme.$theme-color-neutral,
+    background: theme.$theme-color-neutral-lighter-80,
+    hover: theme.$theme-color-neutral-darker-20,
+    focused: theme.$theme-color-neutral-darker-30,
+  ),
+  black: theme.$theme-color-black,
+  white: theme.$theme-color-white,
+  canvas: theme.$theme-color-canvas,
+) !default;
+
+
+@function get-color($category, $type: '') {
+  @if not map.has-key($color-data, $category) {
+    @error 'Color key `#{$category} ` not found. Available colors: #{$color-data}';
+  }
+
+  $color-or-map: map.get($color-data, $category);
+  @if type-of($color-or-map) == color {
+    @return $color-or-map;
+  }
+
+  @if not map.has-key($color-or-map, $type) {
+    @error 'Color `#{$category} - #{$type}` not found. Available colors: #{$color-or-map}';
+  }
+
+  $fetched-color: map.get($color-or-map, $type);
+
+  @if type-of($fetched-color) == color {
+    @return $fetched-color;
+  } @else {
+    @return $color-or-map;
+  }
+}
+
+@mixin generate-color-styles() {
+  @each $color-type, $color-or-map in $color-data {
+    @if type-of($color-or-map) == color {
+      .#{ns.$prefix}-bg-color-#{$color-type + ""} {
+        background-color: $color-or-map;
+      }
+
+      .#{ns.$prefix}-color-#{$color-type + ""} {
+        color: $color-or-map;
+      }
+
+      .#{ns.$prefix}-border-color-#{$color-type + ""} {
+        border-color: $color-or-map;
+      }
+    } @else {
+      @each $color-variant, $color in $color-or-map {
+        @if $color-variant == default {
+          .#{ns.$prefix}-bg-color-#{$color-type + ""} {
+            background-color: $color;
+          }
+
+          .#{ns.$prefix}-color-#{$color-type + ""} {
+            color: $color;
+          }
+
+          .#{ns.$prefix}-border-color-#{$color-type + ""} {
+            border-color: $color;
+          }
+        } @else {
+          .#{ns.$prefix}-bg-color-#{$color-type + ""}-#{$color-variant + ""} {
+            background-color: $color;
+          }
+
+          .#{ns.$prefix}-color-#{$color-type + ""}-#{$color-variant + ""} {
+            color: $color;
+          }
+
+          .#{ns.$prefix}-border-color-#{$color-type + ""}-#{$color-variant + ""} {
+            border-color: $color;
+          }
+        }
+      }
+    }
+  }
+}
+
+

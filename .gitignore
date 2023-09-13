@@ -39,3 +39,7 @@ yarn-error.log*
 **/!.vscode/*.code-snippets
 # Built Visual Studio Code Extensions
 **/*.vsix
+
+packages/zui-styles/output/
+
+packages/recipes/

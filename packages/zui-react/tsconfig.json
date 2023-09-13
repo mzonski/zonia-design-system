@@ -1,0 +1,17 @@
+{
+  "references": [
+    { "path": "../../configs/ts-config/tsconfig.base.json" }
+  ],
+  "include": [
+    "components",
+    "index.ts",
+    ".storybook",
+    "definitions"
+  ],
+  "compilerOptions": {
+    "target": "es6",
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "module": "ESNext"
+  }
+}

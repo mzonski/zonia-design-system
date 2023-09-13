@@ -1,10 +1,4 @@
 {
-  "references": [
-    { "path": "../ts-config/tsconfig.base.json"}
-  ],
-  "include": [
-    "default.cjs",
-    "scss.cjs",
-    "shared.cjs"
-  ],
+  "references": [{ "path": "../ts-config/tsconfig.base.json" }],
+  "include": ["default.cjs", "scss.cjs", "shared.cjs"]
 }

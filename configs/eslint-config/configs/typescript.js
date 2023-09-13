@@ -1,4 +1,4 @@
-const prettierConfig = require('@cfg/prettier-config');
+const prettierConfig = require('zonia-config-prettier');
 
 /** @type import("eslint-define-config").ESLintConfig */
 const eslintTypescriptConfig = {

@@ -12,11 +12,11 @@
     "index.js"
   ],
   "peerDependencies": {
-    "eslint": ">= 8.46.0",
-    "prettier": ">= 3.0.1"
+    "eslint": "^8.46.0",
+    "prettier": "^3.0.1"
   },
   "devDependencies": {
-    "@cfg/prettier-config": "*",
+    "zonia-config-prettier": "*",
     "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",
     "eslint": "^8.46.0",

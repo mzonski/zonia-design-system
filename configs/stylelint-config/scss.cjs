@@ -1,36 +1,33 @@
-const prettierConfig = require('@cfg/prettier-config');
+const prettierConfig = require('zonia-config-prettier');
 
 const sharedRules = {
   'plugin/no-low-performance-animation-properties': true,
-  'plugin/no-unsupported-browser-features': [
-    true,
+  'selector-max-id': [
+    0,
     {
-      browsers: ["> 10%"],
-      severity: 'warning',
-    },
+      ignoreContextFunctionalPseudoClasses: [":not", "/^:(h|H)as$/"]
+    }
   ],
-  'prettier/prettier': [true, prettierConfig]
-}
+  'max-nesting-depth': null,
+  'at-rule-empty-line-before': null,
+  'declaration-block-no-redundant-longhand-properties': null,
+  'selector-max-compound-selectors': null,
+  'color-named': null,
+};
 
 const sharedPlugins = [
   'stylelint-high-performance-animation',
-  'stylelint-no-unsupported-browser-features',
   'stylelint-order',
-]
+];
 
 const sharedExtensions = [
   'stylelint-config-clean-order',
-  'stylelint-a11y/recommended',
-  'stylelint-prettier/recommended',
-]
+  'stylelint-a11y/recommended'
+];
 
 const scssConfig = {
   plugins: sharedPlugins,
-  extends: [
-    'stylelint-config-standard-scss',
-    'stylelint-config-sass-guidelines',
-    ...sharedExtensions
-  ],
+  extends: ['stylelint-config-standard-scss', 'stylelint-config-sass-guidelines', ...sharedExtensions],
   rules: sharedRules,
 };
 

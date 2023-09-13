@@ -1,0 +1,15 @@
+{
+  "root": true,
+  "plugins": [
+    "zonia"
+  ],
+  "extends": [
+    "plugin:zonia/react"
+  ],
+  "parserOptions": {
+    "project": "tsconfig.json"
+  },
+  "rules": {
+    "import/no-extraneous-dependencies": "off"
+  }
+}

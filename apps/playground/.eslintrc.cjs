@@ -5,6 +5,6 @@ module.exports = {
     'plugin:zonia/react',
   ],
   parserOptions: {
-    project: './tsconfig.json'
+    project: './playground/tsconfig.json'
   },
 };

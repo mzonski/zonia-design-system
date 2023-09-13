@@ -1,0 +1,210 @@
+@use "sass:color";
+@use "sass:map";
+
+// Base
+$theme-color-primary: #AE7AFF;
+$theme-color-secondary: #FF7AE9;
+$theme-color-accent: #F48E6F;
+$theme-color-error: #E99898;
+$theme-color-success: #98E9AB;
+$theme-color-warning: #FAE8A4;
+$theme-color-info: #98A6E9;
+$theme-color-neutral: #5F646D;
+$theme-color-canvas: #FAF4F0;
+$theme-color-black: #000;
+$theme-color-white: #FFF;
+
+@function debug-print-colors() {
+  $colors-to-mix: (
+    primary: $theme-color-primary,
+    secondary: $theme-color-secondary,
+    accent: $theme-color-accent,
+    error: $theme-color-error,
+    success: $theme-color-success,
+    warning: $theme-color-warning,
+    info: $theme-color-info,
+  );
+
+  @each $key, $val in $colors-to-mix {
+    @for $i from 1 through 9 {
+      @debug("$theme-color-#{$key}-lighter-#{$i * 10}: #{(color.mix($theme-color-white, $val, $i * 10%))};");
+    }
+    @for $i from 1 through 9 {
+      @debug("$theme-color-#{$key}-darker-#{$i * 10}: #{(color.mix($theme-color-black, $val, $i * 10%))};");
+    }
+  }
+
+  @for $i from 1 through 19 {
+    @debug("$theme-color-neutral-lighter-#{$i * 5}: #{(color.mix($theme-color-white, $theme-color-neutral, $i * 5%))};");
+  }
+  @for $i from 1 through 19 {
+    @debug("$theme-color-neutral-darker-#{$i * 5}: #{(color.mix($theme-color-black, $theme-color-neutral, $i * 5%))};");
+  }
+
+  @return $theme-color-primary;
+}
+
+$theme-color-primary-lighter-10: #b687ff;
+$theme-color-primary-lighter-20: #be95ff;
+$theme-color-primary-lighter-30: #c6a2ff;
+$theme-color-primary-lighter-40: #ceafff;
+$theme-color-primary-lighter-50: #d7bdff;
+$theme-color-primary-lighter-60: #dfcaff;
+$theme-color-primary-lighter-70: #e7d7ff;
+$theme-color-primary-lighter-80: #efe4ff;
+$theme-color-primary-lighter-90: #f7f2ff;
+$theme-color-primary-darker-10: #9d6ee6;
+$theme-color-primary-darker-20: #8b62cc;
+$theme-color-primary-darker-30: #7a55b3;
+$theme-color-primary-darker-40: #684999;
+$theme-color-primary-darker-50: #573d80;
+$theme-color-primary-darker-60: #463166;
+$theme-color-primary-darker-70: #34254d;
+$theme-color-primary-darker-80: #231833;
+$theme-color-primary-darker-90: #110c1a;
+$theme-color-secondary-lighter-10: #ff87eb;
+$theme-color-secondary-lighter-20: #ff95ed;
+$theme-color-secondary-lighter-30: #ffa2f0;
+$theme-color-secondary-lighter-40: #ffaff2;
+$theme-color-secondary-lighter-50: #ffbdf4;
+$theme-color-secondary-lighter-60: #ffcaf6;
+$theme-color-secondary-lighter-70: #ffd7f8;
+$theme-color-secondary-lighter-80: #ffe4fb;
+$theme-color-secondary-lighter-90: #fff2fd;
+$theme-color-secondary-darker-10: #e66ed2;
+$theme-color-secondary-darker-20: #cc62ba;
+$theme-color-secondary-darker-30: #b355a3;
+$theme-color-secondary-darker-40: #99498c;
+$theme-color-secondary-darker-50: #803d75;
+$theme-color-secondary-darker-60: #66315d;
+$theme-color-secondary-darker-70: #4d2546;
+$theme-color-secondary-darker-80: #33182f;
+$theme-color-secondary-darker-90: #1a0c17;
+$theme-color-accent-lighter-10: #f5997d;
+$theme-color-accent-lighter-20: #f6a58c;
+$theme-color-accent-lighter-30: #f7b09a;
+$theme-color-accent-lighter-40: #f8bba9;
+$theme-color-accent-lighter-50: #fac7b7;
+$theme-color-accent-lighter-60: #fbd2c5;
+$theme-color-accent-lighter-70: #fcddd4;
+$theme-color-accent-lighter-80: #fde8e2;
+$theme-color-accent-lighter-90: #fef4f1;
+$theme-color-accent-darker-10: #dc8064;
+$theme-color-accent-darker-20: #c37259;
+$theme-color-accent-darker-30: #ab634e;
+$theme-color-accent-darker-40: #925543;
+$theme-color-accent-darker-50: #7a4738;
+$theme-color-accent-darker-60: #62392c;
+$theme-color-accent-darker-70: #492b21;
+$theme-color-accent-darker-80: #311c16;
+$theme-color-accent-darker-90: #180e0b;
+$theme-color-error-lighter-10: #eba2a2;
+$theme-color-error-lighter-20: #edadad;
+$theme-color-error-lighter-30: #f0b7b7;
+$theme-color-error-lighter-40: #f2c1c1;
+$theme-color-error-lighter-50: #f4cccc;
+$theme-color-error-lighter-60: #f6d6d6;
+$theme-color-error-lighter-70: #f8e0e0;
+$theme-color-error-lighter-80: #fbeaea;
+$theme-color-error-lighter-90: #fdf5f5;
+$theme-color-error-darker-10: #d28989;
+$theme-color-error-darker-20: #ba7a7a;
+$theme-color-error-darker-30: #a36a6a;
+$theme-color-error-darker-40: #8c5b5b;
+$theme-color-error-darker-50: #754c4c;
+$theme-color-error-darker-60: #5d3d3d;
+$theme-color-error-darker-70: #462e2e;
+$theme-color-error-darker-80: #2f1e1e;
+$theme-color-error-darker-90: #170f0f;
+$theme-color-success-lighter-10: #a2ebb3;
+$theme-color-success-lighter-20: #adedbc;
+$theme-color-success-lighter-30: #b7f0c4;
+$theme-color-success-lighter-40: #c1f2cd;
+$theme-color-success-lighter-50: #ccf4d5;
+$theme-color-success-lighter-60: #d6f6dd;
+$theme-color-success-lighter-70: #e0f8e6;
+$theme-color-success-lighter-80: #eafbee;
+$theme-color-success-lighter-90: #f5fdf7;
+$theme-color-success-darker-10: #89d29a;
+$theme-color-success-darker-20: #7aba89;
+$theme-color-success-darker-30: #6aa378;
+$theme-color-success-darker-40: #5b8c67;
+$theme-color-success-darker-50: #4c7556;
+$theme-color-success-darker-60: #3d5d44;
+$theme-color-success-darker-70: #2e4633;
+$theme-color-success-darker-80: #1e2f22;
+$theme-color-success-darker-90: #0f1711;
+$theme-color-warning-lighter-10: #fbeaad;
+$theme-color-warning-lighter-20: #fbedb6;
+$theme-color-warning-lighter-30: #fcefbf;
+$theme-color-warning-lighter-40: #fcf1c8;
+$theme-color-warning-lighter-50: #fdf4d2;
+$theme-color-warning-lighter-60: #fdf6db;
+$theme-color-warning-lighter-70: #fef8e4;
+$theme-color-warning-lighter-80: #fefaed;
+$theme-color-warning-lighter-90: #fffdf6;
+$theme-color-warning-darker-10: #e1d194;
+$theme-color-warning-darker-20: #c8ba83;
+$theme-color-warning-darker-30: #afa273;
+$theme-color-warning-darker-40: #968b62;
+$theme-color-warning-darker-50: #7d7452;
+$theme-color-warning-darker-60: #645d42;
+$theme-color-warning-darker-70: #4b4631;
+$theme-color-warning-darker-80: #322e21;
+$theme-color-warning-darker-90: #191710;
+$theme-color-info-lighter-10: #a2afeb;
+$theme-color-info-lighter-20: #adb8ed;
+$theme-color-info-lighter-30: #b7c1f0;
+$theme-color-info-lighter-40: #c1caf2;
+$theme-color-info-lighter-50: #ccd3f4;
+$theme-color-info-lighter-60: #d6dbf6;
+$theme-color-info-lighter-70: #e0e4f8;
+$theme-color-info-lighter-80: #eaedfb;
+$theme-color-info-lighter-90: #f5f6fd;
+$theme-color-info-darker-10: #8995d2;
+$theme-color-info-darker-20: #7a85ba;
+$theme-color-info-darker-30: #6a74a3;
+$theme-color-info-darker-40: #5b648c;
+$theme-color-info-darker-50: #4c5375;
+$theme-color-info-darker-60: #3d425d;
+$theme-color-info-darker-70: #2e3246;
+$theme-color-info-darker-80: #1e212f;
+$theme-color-info-darker-90: #0f1117;
+$theme-color-neutral-lighter-5: #676c74;
+$theme-color-neutral-lighter-10: #6f747c;
+$theme-color-neutral-lighter-15: #777b83;
+$theme-color-neutral-lighter-20: #7f838a;
+$theme-color-neutral-lighter-25: #878b92;
+$theme-color-neutral-lighter-30: #8f9399;
+$theme-color-neutral-lighter-35: #979aa0;
+$theme-color-neutral-lighter-40: #9fa2a7;
+$theme-color-neutral-lighter-45: #a7aaaf;
+$theme-color-neutral-lighter-50: #afb2b6;
+$theme-color-neutral-lighter-55: #b7b9bd;
+$theme-color-neutral-lighter-60: #bfc1c5;
+$theme-color-neutral-lighter-65: #c7c9cc;
+$theme-color-neutral-lighter-70: #cfd1d3;
+$theme-color-neutral-lighter-75: #d7d8db;
+$theme-color-neutral-lighter-80: #dfe0e2;
+$theme-color-neutral-lighter-85: #e7e8e9;
+$theme-color-neutral-lighter-90: #eff0f0;
+$theme-color-neutral-lighter-95: #f7f7f8;
+$theme-color-neutral-darker-5: #5a5f68;
+$theme-color-neutral-darker-10: #565a62;
+$theme-color-neutral-darker-15: #51555d;
+$theme-color-neutral-darker-20: #4c5057;
+$theme-color-neutral-darker-25: #474b52;
+$theme-color-neutral-darker-30: #43464c;
+$theme-color-neutral-darker-35: #3e4147;
+$theme-color-neutral-darker-40: #393c41;
+$theme-color-neutral-darker-45: #34373c;
+$theme-color-neutral-darker-50: #303237;
+$theme-color-neutral-darker-55: #2b2d31;
+$theme-color-neutral-darker-60: #26282c;
+$theme-color-neutral-darker-65: #212326;
+$theme-color-neutral-darker-70: #1d1e21;
+$theme-color-neutral-darker-75: #18191b;
+$theme-color-neutral-darker-80: #131416;
+$theme-color-neutral-darker-85: #0e0f10;
+$theme-color-neutral-darker-90: #0a0a0b;
+$theme-color-neutral-darker-95: #050505;

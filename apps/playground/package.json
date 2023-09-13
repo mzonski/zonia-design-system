@@ -9,6 +9,7 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint src --ext ts,tsx --fix --report-unused-disable-directives --max-warnings 0",
     "lint:css": "stylelint --fix \"src/*.css\"",
+    "scss:compile": "sass ../../packages/zui-styles/src/zui-styles.scss build/index.css",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -16,13 +17,15 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "stylelint-config-zonia": "*",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react-swc": "^3.3.2",
     "eslint-plugin-zonia": "*",
     "stylelint": "^15.10.2",
+    "stylelint-config-zonia": "*",
     "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "sass": "^1.66.1",
+    "@zonia/zui-styles": "*"
   }
 }

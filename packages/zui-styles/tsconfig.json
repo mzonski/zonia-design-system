@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ESNext",
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "pretty": true,
+    "strict": true,
+    "esModuleInterop": true
+    //    "skipLibCheck": true,
+  },
+  "include": [
+    "gulpfile.ts"
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
+}
