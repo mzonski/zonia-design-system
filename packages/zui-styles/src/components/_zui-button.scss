@@ -1,0 +1,111 @@
+@use "../abstracts/color" as colors;
+@use "../abstracts/border" as border;
+@use "../abstracts/elevation" as elevation;
+@use "../abstracts/spacing" as spacing;
+@use "../abstracts/shape" as shape;
+@use "../abstracts/typography" as typography;
+@use '../namespace' as ns;
+
+@mixin generate-button-styles() {
+  .#{ns.$prefix}-button {
+    @include border.add-border(black, solid);
+    @include border.add-default-focus-outline;
+
+    will-change: filter, background-color;
+    cursor: pointer;
+    user-select: none;
+
+    overflow: hidden;
+    display: flex;
+    flex-shrink: 0;
+    gap: spacing.get-spacing(d1);
+
+    box-sizing: border-box;
+    min-height: 2.5rem;
+    padding: spacing.get-spacing(1) spacing.get-spacing(3);
+
+    border-radius: shape.get-shape(default);
+
+    transition: filter 100ms ease-in-out, background-color 100ms ease-in-out;
+
+    &:not([disabled]) {
+      @include elevation.add-elevation(primary, default);
+    }
+
+    &:hover, &:focus {
+      &:not([disabled]) {
+        @include elevation.add-elevation(primary, far);
+      }
+    }
+
+    .#{ns.$prefix}-label {
+      @include typography.add-font-style(list, bold);
+
+      white-space: nowrap;
+    }
+
+    &:not(:disabled)::after {
+      content: "";
+
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+      opacity: 0;
+
+      transition: opacity 0.3s ease-out;
+    }
+
+    &:not(:disabled):active::after {
+      opacity: 0.7;
+      transition: opacity 0s;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      &:not(:disabled)::after {
+        transition: none;
+      }
+
+      &:not(:disabled):active::after {
+        transition: none;
+      }
+    }
+
+    // TODO: Special handling for non-object colors
+    @each $color-type, $_unused in colors.$color-data {
+      &.button-#{$color-type + ""} {
+        background-color: colors.get-color($color-type, default);
+
+        &:not(:disabled)::after {
+          background-color: colors.contrast-color(colors.get-color($color-type, default), colors.get-color($color-type, darkest), colors.get-color($color-type, lightest));
+        }
+
+        .#{ns.$prefix}-label {
+          color: colors.contrast-color(colors.get-color($color-type, default))
+        }
+
+        &:hover, &:focus {
+          background-color: colors.get-color($color-type, hover);
+
+          .#{ns.$prefix}-label {
+            color: colors.contrast-color(colors.get-color($color-type, hover))
+          }
+        }
+
+        &:disabled {
+          background-color: colors.get-color(neutral, hover);
+
+          .#{ns.$prefix}-label {
+            color: colors.get-color(neutral, lightest);
+          }
+        }
+      }
+    }
+  }
+}

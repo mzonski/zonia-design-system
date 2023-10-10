@@ -1,7 +1,7 @@
 import Checkbox from './Button';
-import Card from './Card';
-import type { CardProps } from './Card/Card';
 import type { CheckboxProps } from './Checkbox/Checkbox';
+import Widget from './Widget';
+import type { WidgetProps } from './Widget/Widget';
 
-export type { CheckboxProps, CardProps };
-export { Checkbox, Card };
+export type { CheckboxProps, WidgetProps };
+export { Checkbox, Widget };

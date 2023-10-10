@@ -7,8 +7,6 @@ $elevation-default-color: color.get-color(black);
 $elevation-offset-1: convert.value-to-rem(4px);
 $elevation-offset-2: convert.value-to-rem(6px);
 $elevation-offset-3: convert.value-to-rem(8px);
-
-// Shadows data
 $elevation-data: (
   primary: (
     default: drop-shadow($elevation-offset-1 $elevation-offset-1 0 $elevation-default-color),
@@ -22,7 +20,7 @@ $elevation-data: (
   ),
 ) !default;
 
-@function get-elevation($type: primary, $level: 1) {
+@function get-elevation($type: primary, $level: default) {
   $elevation-data-object: map.get(map.get($elevation-data, $type), $level);
 
   @if map-has-key($elevation-data, $elevation-data-object) {
@@ -37,7 +35,7 @@ $elevation-data: (
 }
 
 @mixin add-elevation($type: primary, $level: default) {
-  filter: get-elevation(primary, $level);
+  filter: get-elevation($type, $level);
 }
 
 @mixin generate-elevation-styles() {

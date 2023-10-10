@@ -1,0 +1,35 @@
+@use 'sass:map';
+@use "converters" as converters;
+@use '../namespace' as ns;
+
+$shape-radius-small: converters.value-to-rem(4px);
+$shape-radius-medium: converters.value-to-rem(8px);
+$shape-radius-large: converters.value-to-rem(16px);
+$shape-radius-xlarge: converters.value-to-rem(24px);
+$shape-data: (
+  circle: 50%,
+  square: 0,
+  default: converters.value-to-rem(2px),
+) !default;
+
+@function get-shape($type: primary) {
+  $fetched-shape: map.get($shape-data, $type);
+
+  @if $fetched-shape {
+    @return $fetched-shape;
+  } @else {
+    @error 'Shape `#{$type}` not found. Available shapes: #{$shape-data}';
+  }
+}
+
+@mixin add-shape($type: default) {
+  border-radius: get-shape($type);
+}
+
+@mixin generate-shape-styles() {
+  @each $shape-key, $_unused in $shape-data {
+    .#{ns.$prefix}-shape-#{$shape-key} {
+      @include add-shape($shape-key);
+    }
+  }
+}

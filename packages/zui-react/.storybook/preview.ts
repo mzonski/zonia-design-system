@@ -1,6 +1,6 @@
 import type { Preview } from "@storybook/react";
 import "@zonia/zui-styles/src/zui-styles.scss";
-import "@zonia/zui-styles/src/normalize.css";
+import "packages/zui-styles/src/_normalize.css";
 import { appendZuiStyleClass } from "./decorators";
 
 const preview: Preview = {

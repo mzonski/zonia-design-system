@@ -2,55 +2,72 @@
 @use "../namespace" as ns;
 @use 'sass:map';
 @use 'sass:color';
+@use 'sass:math';
 
 $color-data: (
   primary: (
     default: theme.$theme-color-primary,
-    background: theme.$theme-color-primary-lighter-80,
-    hover: theme.$theme-color-primary-darker-20,
-    focused: theme.$theme-color-primary-darker-30,
+    background: theme.$theme-color-primary-darker-40,
+    hover: theme.$theme-color-primary-lighter-20,
+    focused: theme.$theme-color-primary-lighter-30,
+    darkest: theme.$theme-color-primary-darker-60,
+    lightest: theme.$theme-color-primary-lighter-60,
   ),
   secondary: (
     default: theme.$theme-color-secondary,
-    background: theme.$theme-color-secondary-lighter-80,
+    background: theme.$theme-color-secondary-lighter-60,
     hover: theme.$theme-color-secondary-darker-20,
     focused: theme.$theme-color-secondary-darker-30,
+    darkest: theme.$theme-color-secondary-darker-60,
+    lightest: theme.$theme-color-secondary-lighter-60,
   ),
   accent: (
     default: theme.$theme-color-accent,
-    background: theme.$theme-color-accent-lighter-80,
+    background: theme.$theme-color-accent-lighter-60,
     hover: theme.$theme-color-accent-darker-20,
     focused: theme.$theme-color-accent-darker-30,
+    darkest: theme.$theme-color-accent-darker-60,
+    lightest: theme.$theme-color-accent-lighter-60,
   ),
   error: (
     default: theme.$theme-color-error,
-    background: theme.$theme-color-error-lighter-80,
+    background: theme.$theme-color-error-lighter-60,
     hover: theme.$theme-color-error-darker-20,
     focused: theme.$theme-color-error-darker-30,
+    darkest: theme.$theme-color-error-darker-60,
+    lightest: theme.$theme-color-error-lighter-60,
   ),
   info: (
     default: theme.$theme-color-info,
-    background: theme.$theme-color-info-lighter-80,
+    background: theme.$theme-color-info-lighter-60,
     hover: theme.$theme-color-info-darker-20,
     focused: theme.$theme-color-info-darker-30,
+    darkest: theme.$theme-color-info-darker-60,
+    lightest: theme.$theme-color-info-lighter-60,
   ),
   success: (
     default: theme.$theme-color-success,
-    background: theme.$theme-color-success-lighter-80,
+    background: theme.$theme-color-success-lighter-60,
     hover: theme.$theme-color-success-darker-20,
     focused: theme.$theme-color-success-darker-30,
+    darkest: theme.$theme-color-success-darker-60,
+    lightest: theme.$theme-color-success-lighter-60,
   ),
   warning: (
     default: theme.$theme-color-warning,
-    background: theme.$theme-color-warning-lighter-80,
+    background: theme.$theme-color-warning-lighter-60,
     hover: theme.$theme-color-warning-darker-20,
     focused: theme.$theme-color-warning-darker-30,
+    darkest: theme.$theme-color-warning-darker-60,
+    lightest: theme.$theme-color-warning-lighter-60,
   ),
   neutral: (
     default: theme.$theme-color-neutral,
-    background: theme.$theme-color-neutral-lighter-80,
-    hover: theme.$theme-color-neutral-darker-20,
+    background: theme.$theme-color-neutral-lighter-60,
+    hover: theme.$theme-color-neutral-lighter-40,
     focused: theme.$theme-color-neutral-darker-30,
+    darkest: theme.$theme-color-neutral-darker-60,
+    lightest: theme.$theme-color-neutral-lighter-60,
   ),
   black: theme.$theme-color-black,
   white: theme.$theme-color-white,
@@ -80,6 +97,31 @@ $color-data: (
     @return $color-or-map;
   }
 }
+
+@function is-extended-color($category, $type: '') {
+  @if not map.has-key($color-data, $category) {
+    @error 'Color key `#{$category} ` not found. Available colors: #{$color-data}';
+  }
+
+  $color-or-map: map.get($color-data, $category);
+  @if type-of($color-or-map) == color {
+    @return false;
+  } @else {
+    @return true;
+  }
+}
+
+ @function contrast-color($color, $dark-color: get-color(black), $light-color: get-color(white)) {
+   @if not $color {
+     @return null;
+   } @else {
+     // Based on the algorithm recommended by W3: https://www.w3.org/TR/AERT/#color-contrast
+     $yiq: math.div((color.red($color) * 299 + color.green($color) * 587 + color.blue($color) * 114), 1000);
+     @return if($yiq >= 128, $dark-color, $light-color);
+   }
+ }
+
+
 
 @mixin generate-color-styles() {
   @each $color-type, $color-or-map in $color-data {

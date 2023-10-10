@@ -3,11 +3,37 @@
 @use "color" as color;
 @use '../namespace' as ns;
 
-$default-border-size: convert.value-to-rem(1px);
 $border-types: [solid, dashed];
+$border-width: (
+  default: convert.value-to-rem(1px),
+  big: convert.value-to-rem(2px),
+  bigger: convert.value-to-rem(4px),
+  biggest: convert.value-to-rem(6px),
+);
 
-@mixin add-border($color: primary, $type: solid) {
-  border: $default-border-size color.get-color($color, default) $type;
+@function get-border($color: primary, $type: solid, $width: default) {
+  @return map.get($border-width, $width) color.get-color($color, default) $type;
+}
+
+@mixin add-border($color: primary, $type: solid, $width: default) {
+  border: get-border($color, $type, $width);
+}
+
+@mixin add-default-focus-outline() {
+  &:focus {
+    outline: get-border(black, solid, big);
+  }
+
+  /* stylelint-disable a11y/no-outline-none */
+  &:focus:not(:focus-visible) {
+    outline: 0;
+    box-shadow: none;
+  }
+  /* stylelint-enable a11y/no-outline-none */
+
+  &:focus-visible:focus:not(:focus-visible) {
+    outline: get-border(black, solid, big);
+  }
 }
 
 @mixin generate-border-styles() {

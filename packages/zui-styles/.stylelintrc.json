@@ -1,1 +1,1 @@
-{ "extends": ["stylelint-config-zonia"] }
+{ "extends": ["stylelint-config-zonia"], "ignoreFiles": ["dist/**/*.css"] }

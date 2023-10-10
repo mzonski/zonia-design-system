@@ -1,5 +1,5 @@
-import type { CheckboxProps, CardProps } from './components';
-import { Checkbox, Card } from './components';
+import type { CheckboxProps, WidgetProps } from './components';
+import { Checkbox, Widget } from './components';
 
-export type { CheckboxProps, CardProps };
-export { Checkbox, Card };
+export type { CheckboxProps, WidgetProps };
+export { Checkbox, Widget };

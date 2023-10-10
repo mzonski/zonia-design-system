@@ -8,8 +8,8 @@ import rename from 'gulp-rename';
 
 const paths = {
   source: './src/**/*.scss',
-  outCss: './output/**/*.css',
-  outDir: './output',
+  outCss: './dist/**/*.css',
+  outDir: './dist',
 } as const;
 
 function minifyCSS() {

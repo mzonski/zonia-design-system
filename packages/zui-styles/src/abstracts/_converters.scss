@@ -18,37 +18,22 @@ $default-browser-font-size: 16;
   }
 }
 
+@function value-to-em($value) {
+  $unit: math.unit($value);
+
+  @if $value == 0 {
+    @return 0;
+  } @else if $unit == 'em' {
+    @return $value;
+  } @else if $unit == 'rem' {
+    @return (($value / 1rem * 1em) * math.div(default-theme.$theme-base-font-size / $default-browser-font-size * 1px));
+  } @else if $unit == 'px' {
+    @return math.div($value, $default-browser-font-size * 1px) * 1em;
+  } @else {
+    @error 'Value must be in px, rem, or em.';
+  }
+}
+
 @function negate-value($value) {
   @return $value * -1
 };
-
-@function debug-map($map, $level: 1) {
-  @if type-of($map) != 'map' {
-    @return null;
-  }
-
-  $output: '';
-  $newline: '\A ';
-
-  @if $level == 1 {
-    @each $key, $value in $map {
-      $output: $output + '#{$newline}- #{$key} #{debug-map($value, $level + 1)}';
-    }
-  } @else {
-    $output: '(';
-    $i: 1;
-
-    @each $key, $value in $map {
-      $sep: if($i < list.length($map), ', ', '');
-      $output: $output + '#{$key}#{$sep}#{debug-map($value, $level + 1)}';
-      $i: $i + 1;
-    }
-
-    $output: $output + ')';
-  }
-
-  // stylelint-disable
-  @debug 'Map: #{$output}';
-  // stylelint-enable
-  @return $output;
-}

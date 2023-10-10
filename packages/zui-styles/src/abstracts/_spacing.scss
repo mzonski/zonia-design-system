@@ -1,0 +1,78 @@
+@use 'sass:map';
+@use 'sass:math';
+@use "converters" as convert;
+@use "../themes/default-theme" as theme;
+@use '../namespace' as ns;
+
+$base-spacing: convert.value-to-rem(8px);
+$spacing-d3: math.div($base-spacing, 8);
+$spacing-d2: math.div($base-spacing, 4);
+$spacing-d1: math.div($base-spacing, 2);
+$spacing-1: $base-spacing;
+$spacing-2: $base-spacing * 2;
+$spacing-3: $base-spacing * 3;
+$spacing-4: $base-spacing * 4;
+$spacing-5: $base-spacing * 5;
+$spacing-6: $base-spacing * 6;
+$spacing-7: $base-spacing * 7;
+$spacing-8: $base-spacing * 8;
+$spacing-9: $base-spacing * 9;
+$spacing-data: (
+  d3: $spacing-d3,
+  d2: $spacing-d2,
+  d1: $spacing-d1,
+  1: $spacing-1,
+  2: $spacing-2,
+  3: $spacing-3,
+  4: $spacing-4,
+  5: $spacing-5,
+  6: $spacing-6,
+  7: $spacing-7,
+  8: $spacing-8,
+  9: $spacing-9,
+) !default;
+
+@function get-spacing($space: $spacing-1) {
+  $fetched-value: map.get($spacing-data, $space);
+
+  @if type-of($fetched-value) == number {
+    @return $fetched-value;
+  } @else {
+    @error 'Spacing variant `#{$space}` not found. Available variants: #{$spacing-data}';
+  }
+}
+
+@mixin generate-spacing-styles() {
+  @each $spacing-type, $spacing in $spacing-data {
+      .#{ns.$prefix}-p-#{$spacing-type} {
+        padding: get-spacing($spacing-type);
+      }
+      .#{ns.$prefix}-pt-#{$spacing-type} {
+        padding-top: get-spacing($spacing-type);
+      }
+      .#{ns.$prefix}-pb-#{$spacing-type} {
+        padding-bottom: get-spacing($spacing-type);
+      }
+      .#{ns.$prefix}-pl-#{$spacing-type} {
+        padding-left: get-spacing($spacing-type);
+      }
+      .#{ns.$prefix}-pr-#{$spacing-type} {
+        padding-right: get-spacing($spacing-type);
+      }
+      .#{ns.$prefix}-m-#{$spacing-type} {
+        margin: get-spacing($spacing-type);
+      }
+      .#{ns.$prefix}-mt-#{$spacing-type} {
+        margin-top: get-spacing($spacing-type);
+      }
+      .#{ns.$prefix}-mb-#{$spacing-type} {
+        margin-bottom: get-spacing($spacing-type);
+      }
+      .#{ns.$prefix}-ml-#{$spacing-type} {
+        margin-left: get-spacing($spacing-type);
+      }
+      .#{ns.$prefix}-mr-#{$spacing-type} {
+        margin-right: get-spacing($spacing-type);
+      }
+  }
+}

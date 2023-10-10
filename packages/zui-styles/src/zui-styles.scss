@@ -1,11 +1,14 @@
 @charset "UTF-8";
 @use 'namespace' as ns;
-@use './abstracts/border' as border;
-@use './abstracts/color' as color;
-@use './abstracts/elevation' as elevation;
+@use './abstracts' as ab;
+@use './components/zui-button' as zuiButton;
 
 .#{ns.$prefix} {
-  @include border.generate-border-styles;
-  @include color.generate-color-styles;
-  @include elevation.generate-elevation-styles;
+  @include zuiButton.generate-button-styles;
+
+  @include ab.generate-spacing-styles;
+  @include ab.generate-typography-styles;
+  @include ab.generate-border-styles;
+  @include ab.generate-color-styles;
+  @include ab.generate-elevation-styles;
 }

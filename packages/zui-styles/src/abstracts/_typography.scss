@@ -1,0 +1,127 @@
+@use "sass:map";
+@use "color" as color;
+@use "converters" as convert;
+@use "../namespace" as ns;
+@use "../themes/default-theme" as default-theme;
+@use "../utils" as utils;
+@import 'https://fonts.googleapis.com/css?family=Roboto+Flex:400,500,700';
+
+$text-font-family: default-theme.$theme-font-family;
+$text-base-font-size: default-theme.$theme-base-font-size;
+$typography-types: [h1, h2, h3, h4, h5, h6, subtitle1, subtitle2, body1, body2, caption, overline, list] !default;
+$font-size-data: (
+  h1: convert.value-to-rem(48px),
+  h2: convert.value-to-rem(36px),
+  h3: convert.value-to-rem(28px),
+  h4: convert.value-to-rem(24px),
+  h5: convert.value-to-rem(20px),
+  h6: convert.value-to-rem(18px),
+  subtitle1: convert.value-to-rem(16px),
+  subtitle2: convert.value-to-rem(14px),
+  body1: convert.value-to-rem(16px),
+  body2: convert.value-to-rem(14px),
+  caption: convert.value-to-rem(12px),
+  overline: convert.value-to-rem(12px),
+  list: convert.value-to-rem(16px)
+) !default;
+$line-height-data: (
+  h1: 3.5rem,
+  h2: 2.875rem,
+  h3: 2.375rem,
+  h4: 2rem,
+  h5: 1.75rem,
+  h6: 1.5rem,
+  subtitle1: 1.5rem,
+  subtitle2: 1.3125rem,
+  body1: 1.5rem,
+  body2: 1.3125rem,
+  caption: 1rem,
+  overline: 1rem,
+  list: 1.5rem
+) !default;
+$font-weight-data: (
+  bold: 700,
+  regular: 500,
+  light: 400
+) !default;
+$letter-spacing-data: (
+  h1: initial,
+  h2: initial,
+  h3: initial,
+  h4: initial,
+  h5: initial,
+  h6: initial,
+  subtitle1: initial,
+  subtitle2: initial,
+  body1: initial,
+  body2: initial,
+  caption: initial,
+  overline: initial,
+  list: 0.735rem,
+) !default;
+
+@function get-font-size($element: body1) {
+  $fetched-font-size: map.get($font-size-data, $element);
+  @if not type-of($fetched-font-size) {
+    @error 'Font size `#{$element}` not found. Available options: #{$font-size-data}';
+  } @else {
+    @return $fetched-font-size;
+  }
+}
+
+@function get-line-height($element: body1) {
+  $fetched-line-height: map.get($line-height-data, $element);
+  @if not type-of($fetched-line-height) {
+    @error 'Line height `#{$element}` not found. Available options: #{$line-height-data}';
+  } @else {
+    @return $fetched-line-height;
+  }
+}
+@function get-letter-spacing($element: body1) {
+  $letter-spacing: map.get($letter-spacing-data, $element);
+  @if not type-of($letter-spacing) {
+    @error 'Letter spacing `#{$element}` not found. Available options: #{$line-height-data}';
+  } @else {
+    @return $letter-spacing;
+  }
+}
+
+@function get-font-weight($weight: normal) {
+  $fetched-font-weight: map.get($font-weight-data, $weight);
+  @if not type-of($fetched-font-weight) {
+    @error 'Font weight `#{$weight}` not found. Available options: #{$font-weight-data}';
+  } @else {
+    @return $fetched-font-weight;
+  }
+}
+
+@function create-font-style-name($typography-type, $font-weight-type) {
+  @if $font-weight-type == regular {
+    @return #{ns.$prefix}-typography-#{$typography-type + ""};
+  }
+  @return #{ns.$prefix}-typography-#{$typography-type + ""}-#{$font-weight-type + ""};
+}
+
+@mixin add-font-style($typography-type, $font-weight) {
+  font-family: $text-font-family;
+  font-size: get-font-size($typography-type);
+  font-weight: get-font-weight($font-weight);
+  line-height: get-line-height($typography-type);
+  letter-spacing: 0.0875em;
+}
+
+@mixin generate-typography-styles() {
+  @each $type in $typography-types {
+    @if not utils.str-starts-with($type, 'h') {
+      @each $font-weight-key, $font-weight in $font-weight-data {
+        .#{create-font-style-name($type, $font-weight-key)} {
+          @include add-font-style($type, $font-weight-key)
+        }
+      }
+    } @else {
+      .#{create-font-style-name($type, regular)} {
+        @include add-font-style($type, regular)
+      }
+    }
+  }
+}
